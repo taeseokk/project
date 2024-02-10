@@ -1,0 +1,43 @@
+spring:
+
+  jwt:
+    secret : f234fuhvertsv34789yhiuFDSIUFGYDTE5
+
+    access:
+      expiration: 3600000 # 1??(60?) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+      header: Authorization
+
+    refresh:
+      expiration: 86400000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> ??))
+      header: Authorization-refresh
+
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      "[hibernate.format_sql]": true
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/project?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
+    username: root
+    password: 88512968
+
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+
+  servlet:
+    multipart:
+      max-request-size: 5MB
+      max-file-size: 2MB
+
+
+  file:
+    dir: C:\files\
+
+
