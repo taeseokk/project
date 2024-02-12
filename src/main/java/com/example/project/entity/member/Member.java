@@ -2,11 +2,17 @@ package com.example.project.entity.member;
 
 
 import com.example.project.entity.BaseTime;
+import com.example.project.entity.comment.Comment;
+import com.example.project.entity.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -41,8 +47,29 @@ public class Member extends BaseTime {
     @Column(length = 1000)
     private String refreshToken;
 
-
     public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword) {
         return passwordEncoder.matches(checkPassword, getPassword());
+    }
+
+    // 회원탈퇴 -> 작성댓글도 함께 삭제
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true) // EAGER : 즉시로딩 // LAZY : 지연로딩
+    private List<Post> postList = new ArrayList<>();
+
+    // post엔티티가 member엔티티의 주인이 되는 것
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> commentList = new ArrayList<>();
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public void addPost(Post post) {
+        postList.add(post);
+    }
+
+    public void addComment(Comment comment) {
+        commentList.add(comment);
     }
 }
