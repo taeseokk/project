@@ -5,16 +5,14 @@ import com.example.project.entity.BaseTime;
 import com.example.project.entity.comment.Comment;
 import com.example.project.entity.post.Post;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Builder
+@Getter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
