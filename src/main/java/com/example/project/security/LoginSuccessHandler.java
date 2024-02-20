@@ -1,6 +1,6 @@
 package com.example.project.security;
 
-import com.example.project.Service.ResponseService;
+import com.example.project.service.ResponseService;
 import com.example.project.dto.jwt.JwtResponseDto;
 import com.example.project.entity.model.SingleResult;
 import com.example.project.repository.member.MemberRepository;
