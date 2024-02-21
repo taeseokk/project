@@ -1,6 +1,9 @@
 package com.example.project.service.post;
 
 import com.example.project.dto.post.PostDto;
+import com.example.project.dto.post.PostInfoDto;
+import com.example.project.dto.post.PostPagingDto;
+import com.example.project.dto.post.PostSearchCondition;
 import com.example.project.entity.post.Post;
 import com.example.project.repository.member.MemberRepository;
 import com.example.project.repository.post.PostRepository;
