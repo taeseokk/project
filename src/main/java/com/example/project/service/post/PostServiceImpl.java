@@ -1,5 +1,8 @@
 package com.example.project.service.post;
 
+import com.example.project.advice.PostException;
+import com.example.project.advice.PostExceptionType;
+import com.example.project.advice.exception.NotFoundMemberException;
 import com.example.project.dto.post.PostDto;
 import com.example.project.dto.post.PostInfoDto;
 import com.example.project.dto.post.PostPagingDto;
@@ -8,6 +11,7 @@ import com.example.project.entity.post.Post;
 import com.example.project.repository.member.MemberRepository;
 import com.example.project.repository.post.PostRepository;
 import com.example.project.security.SecurityUtil;
+import com.example.project.service.file.FileService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,7 +33,7 @@ public class PostServiceImpl implements PostService {
     public void savePost(PostDto postDto) {
         Post post = Post.builder().title(postDto.getTitle()).content(postDto.getContent()).build();
         post.setMember(memberRepository.findById(SecurityUtil.getLoginUsername())
-                .orElseThrow(() -> new Exception()));
+                .orElseThrow(() -> new NotFoundMemberException()));
 
         postRepository.save(post);
     }
@@ -72,11 +76,11 @@ public class PostServiceImpl implements PostService {
         return new PostInfoDto(postRepository.findWithMemberByIdx(idx).orElseThrow(() -> new NotFoundMemberException()));
     }
 
-    @Override
-    public PostPagingDto searchList(Pageable pageable, PostSearchCondition search) {
-
-        return new PostPagingDto(postRepository.search(search, pageable));
-    }
+//    @Override
+//    public PostPagingDto searchList(Pageable pageable, PostSearchCondition search) {
+//
+//        return new PostPagingDto(postRepository.search(search, pageable));
+//    }
 
     private void checkAuthority(Post post, PostExceptionType exceptionType) { // 권한 체크
         if (!post.getMember().getId().equals(SecurityUtil.getLoginUsername())) { //

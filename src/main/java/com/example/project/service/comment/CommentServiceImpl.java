@@ -1,5 +1,6 @@
 package com.example.project.service.comment;
 
+import com.example.project.advice.exception.NotFoundMemberException;
 import com.example.project.dto.commet.CommentSaveDto;
 import com.example.project.dto.commet.CommentUpdateDto;
 import com.example.project.entity.comment.Comment;
@@ -43,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void update(Long id, CommentUpdateDto commentUpdateDto) {
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> new NotFoundMemberException());
+        Comment comment = commentRepository.findById(id).orElseThrow(NotFoundMemberException::new);
         if(!comment.getMember().getId().equals(SecurityUtil.getLoginUsername())) {
             throw new NotFoundMemberException();
         }
